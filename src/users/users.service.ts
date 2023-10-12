@@ -1,26 +1,49 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
+import { InjectRepository } from '@nestjs/typeorm';
 
 @Injectable()
 export class UsersService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+  ) {}
+  async create(createUserDto: CreateUserDto) {
+    const newUser = this.userRepository.create(createUserDto);
+    const result = await this.userRepository.save(newUser);
+    return result;
   }
 
-  findAll() {
-    return `This action returns all users`;
+  async findAll() {
+    return await this.userRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(id: number) {
+    const userFound = await this.userRepository.findOneBy({ id_user: id });
+    if (!userFound) {
+      throw new NotFoundException(`L'id numero ${id} n'existe pas`);
+    }
+    return userFound;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, updateUserDto: UpdateUserDto) {
+    const userFound = await this.userRepository.findOneBy({ id_user: id });
+    if (!userFound) {
+      throw new NotFoundException(`L'id numéro ${id} n'existe pas`);
+    }
+    Object.assign(userFound, updateUserDto);
+    await this.userRepository.save(userFound);
+    return userFound;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    const userFound = await this.userRepository.findOneBy({ id_user: id });
+    if (!userFound) {
+      throw new NotFoundException(`L'id numéro ${id} n'existe pas`);
+    }
+    return await this.userRepository.remove(userFound);
   }
 }
