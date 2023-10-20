@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Favoris } from 'src/favoris/entities/favoris.entity';
+import { Recipe } from 'src/recipes/entities/recipe.entity';
 
 export class CreateUserDto {
   @ApiProperty()
@@ -9,4 +11,10 @@ export class CreateUserDto {
 
   @ApiProperty()
   email: string;
+
+  @ApiProperty()
+  recipes: Recipe[];
+
+  @ApiProperty()
+  favoris: Favoris[];
 }

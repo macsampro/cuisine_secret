@@ -21,7 +21,7 @@ export class AuthService {
   ) {}
 
   async register(createAuthDto: CreateAuthDto) {
-    const { username, password_hash } = createAuthDto;
+    const { username, password_hash, email } = createAuthDto;
 
     // hashage du mot de passe
     const salt = await bcrypt.genSalt();
@@ -31,6 +31,7 @@ export class AuthService {
     const user = this.userRepository.create({
       username,
       password_hash: hashedPassword,
+      email,
     });
 
     try {
@@ -48,18 +49,30 @@ export class AuthService {
     }
   }
 
-  async login(loginDot: LoginDto) {
-    const { username, password_hash } = loginDot;
-    const user = await this.userRepository.findOneBy({ username });
+  async login(loginDto: LoginDto) {
+    console.log(loginDto);
+    // const { username, password_hash } = loginDto;
+    const user = await this.userRepository.findOne({
+      where: { username: loginDto.username },
+    });
+    console.log(user);
+    console.log(loginDto.password_hash);
+    console.log(user.password_hash);
+    const resultcompart = await bcrypt.compare(
+      loginDto.password_hash,
+      user.password_hash,
+    );
 
-    if (user && (await bcrypt.compare(password_hash, user.password_hash))) {
+    if (user && resultcompart) {
+      console.log('11');
+
       const payload = {
         username: user.username,
-        user_id: user.id_user,
+        id_user: user.id_user,
         // sub: user.username,
       };
-      const accessToken = await this.jwtService.sign(payload);
-      return { accessToken };
+      const accessToken = this.jwtService.sign(payload);
+      return { accessToken, user_id: user.id_user, username: user.username };
     } else {
       throw new UnauthorizedException('identification incorecte');
     }
