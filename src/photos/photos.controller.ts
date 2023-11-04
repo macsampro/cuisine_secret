@@ -1,34 +1,39 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Param,
+  UseInterceptors,
+  UploadedFile,
+  StreamableFile,
+  Res,
+} from '@nestjs/common';
 import { PhotosService } from './photos.service';
-import { CreatePhotoDto } from './dto/create-photo.dto';
-import { UpdatePhotoDto } from './dto/update-photo.dto';
+
+import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('photos')
 export class PhotosController {
   constructor(private readonly photosService: PhotosService) {}
 
   @Post()
-  create(@Body() createPhotoDto: CreatePhotoDto) {
-    return this.photosService.create(createPhotoDto);
+  @UseInterceptors(FileInterceptor('monFichier'))
+  uploadImage(@UploadedFile() file: Express.Multer.File) {
+    return this.photosService.create(file);
   }
 
   @Get()
-  findAll() {
-    return this.photosService.findAll();
+  // @UseGuards(AuthGuard('jwt'))
+  async getPhotos(@Res({ passthrough: true }) res): Promise<StreamableFile> {
+    return this.photosService.getPhotos(res);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.photosService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePhotoDto: UpdatePhotoDto) {
-    return this.photosService.update(+id, updatePhotoDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.photosService.remove(+id);
+  // @UseGuards(AuthGuard('jwt'))
+  getPhotoById(
+    @Param('id') id: string,
+    @Res({ passthrough: true }) res,
+  ): Promise<StreamableFile> {
+    return this.photosService.getPhotoById(+id, res);
   }
 }

@@ -1,5 +1,7 @@
 import { Difficulty, RecipeType } from 'src/enums/recipe.enums';
 import { Ingredient } from 'src/ingredients/entities/ingredient.entity';
+import { Photo } from 'src/photos/entities/photo.entity';
+import { PreparationStep } from 'src/preparation_steps/entities/preparation_step.entity';
 import { User } from 'src/users/entities/user.entity';
 import {
   Column,
@@ -8,6 +10,7 @@ import {
   JoinTable,
   ManyToMany,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
@@ -59,4 +62,13 @@ export class Recipe {
 
   @ManyToMany(() => User, (user) => user.recipe_favoris)
   user_favoris?: User[];
+
+  @OneToMany(() => Photo, (photo) => photo.recipe)
+  id_photo?: Photo;
+
+  @OneToMany(
+    () => PreparationStep,
+    (preparation_step) => preparation_step.recipe,
+  )
+  id_preparation_step?: PreparationStep;
 }
