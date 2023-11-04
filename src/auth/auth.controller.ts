@@ -7,12 +7,12 @@ import { LoginDto } from './dto/loging.dot';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post('/register')
+  @Post('register')
   create(@Body() createAuthDto: CreateAuthDto) {
     return this.authService.register(createAuthDto);
   }
 
-  @Post('/login')
+  @Post('login')
   login(@Body() loginDto: LoginDto): Promise<{ accessToken: string }> {
     return this.authService.login(loginDto);
   }
