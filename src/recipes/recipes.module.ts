@@ -5,9 +5,17 @@ import { User } from 'src/users/entities/user.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Recipe } from './entities/recipe.entity';
 import { QuantityIngredient } from 'src/quantity_ingredients/entities/quantity_ingredient.entity';
+import { PreparationStep } from 'src/preparation_steps/entities/preparation_step.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([User, Recipe, QuantityIngredient])],
+  imports: [
+    TypeOrmModule.forFeature([
+      User,
+      Recipe,
+      QuantityIngredient,
+      PreparationStep,
+    ]),
+  ],
 
   controllers: [RecipesController],
   providers: [RecipesService],

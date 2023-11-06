@@ -11,7 +11,7 @@ import { PreparationStepsService } from './preparation_steps.service';
 import { CreatePreparationStepDto } from './dto/create-preparation_step.dto';
 import { UpdatePreparationStepDto } from './dto/update-preparation_step.dto';
 
-@Controller('preparation-steps')
+@Controller('preparation_steps')
 export class PreparationStepsController {
   constructor(
     private readonly preparationStepsService: PreparationStepsService,
