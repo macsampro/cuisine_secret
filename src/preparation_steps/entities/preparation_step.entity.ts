@@ -10,8 +10,8 @@ export class PreparationStep {
   description: string;
 
   @Column()
-  @JoinColumn({ name: 'order_step' })
-  order: number;
+  // @JoinColumn({ name: 'order_step' })
+  order_step: number;
 
   @Column()
   id_recipe: number;
