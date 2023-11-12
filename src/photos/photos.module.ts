@@ -9,13 +9,13 @@ import { PassportModule } from '@nestjs/passport';
 @Module({
   imports: [
     MulterModule.register({
-      dest: 'uploads',
+      dest: 'uploads', // Le dossier où Multer va enregistrer les fichiers uploadés.
     }),
-    TypeOrmModule.forFeature([Photo]),
-    PassportModule.register({ defaultStrategy: 'jwt' }),
+    TypeOrmModule.forFeature([Photo]), // Enregistrement de l'entité Photo pour l'injection dans les services.
+    PassportModule.register({ defaultStrategy: 'jwt' }), // Configuration du module Passport avec la stratégie JWT.
   ],
 
-  controllers: [PhotosController],
-  providers: [PhotosService],
+  controllers: [PhotosController], // Contrôleur qui va gérer les routes pour les photos.
+  providers: [PhotosService], // Service qui va gérer la logique métier des photos.
 })
 export class PhotosModule {}
