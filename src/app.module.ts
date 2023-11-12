@@ -18,11 +18,14 @@ import { Ingredient } from './ingredients/entities/ingredient.entity';
 import { Favoris } from './favoris/entities/favoris.entity';
 import { QuantityIngredientsModule } from './quantity_ingredients/quantity_ingredients.module';
 import { QuantityIngredient } from './quantity_ingredients/entities/quantity_ingredient.entity';
-// import { join } from 'path';
-// import { ServeStaticModule } from '@nestjs/serve-static';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // 'uploads' est le dossier où vous stockez les fichiers
+    }),
     ConfigModule.forRoot({ envFilePath: [`.env`] }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -43,10 +46,6 @@ import { QuantityIngredient } from './quantity_ingredients/entities/quantity_ing
       synchronize: false,
       logging: false,
     }),
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'uploads'),
-    //   serveRoot: '/uploads',
-    // }),
 
     UsersModule,
     AuthModule,

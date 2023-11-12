@@ -26,8 +26,6 @@ export class PhotosService {
     console.log(result);
     let imageFile;
     const imageTab = [];
-    // const lastResult = result[result.length - 1];
-    // console.log(lastResult);
     for (let i = 0; i < result.length; i++) {
       imageFile = createReadStream(
         join(process.cwd(), 'uploads', result[i].name),
