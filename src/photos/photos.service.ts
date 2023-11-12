@@ -51,4 +51,11 @@ export class PhotosService {
     console.log('mon image', imageFile);
     return new StreamableFile(imageFile);
   }
+
+  async findPhotoByRecipeId(recipeId: number): Promise<Photo> {
+    const photo = await this.photoRepository.findOne({
+      where: { id_recipe: recipeId },
+    });
+    return photo;
+  }
 }

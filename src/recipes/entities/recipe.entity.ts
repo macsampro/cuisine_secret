@@ -63,7 +63,7 @@ export class Recipe {
   @ManyToMany(() => User, (user) => user.recipe_favoris)
   user_favoris?: User[];
 
-  @OneToMany(() => Photo, (photo) => photo.recipe)
+  @OneToMany(() => Photo, (photo) => photo.recipe, { eager: true })
   id_photo?: Photo;
 
   @OneToMany(

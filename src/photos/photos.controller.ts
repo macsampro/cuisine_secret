@@ -7,6 +7,7 @@ import {
   UploadedFile,
   StreamableFile,
   Res,
+  NotFoundException,
 } from '@nestjs/common';
 import { PhotosService } from './photos.service';
 
@@ -35,5 +36,14 @@ export class PhotosController {
     @Res({ passthrough: true }) res,
   ): Promise<StreamableFile> {
     return this.photosService.getPhotoById(+id, res);
+  }
+
+  @Get('/recipes/:recipeId')
+  async getPhotoByRecipeId(@Param('recipeId') recipeId: number): Promise<any> {
+    const photo = await this.photosService.findPhotoByRecipeId(recipeId);
+    if (!photo) {
+      throw new NotFoundException('Photo not found');
+    }
+    return photo;
   }
 }
