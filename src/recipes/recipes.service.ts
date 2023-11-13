@@ -1,6 +1,5 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
-// import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -22,6 +21,10 @@ export class RecipesService {
     private preparationStep: Repository<PreparationStep>,
   ) {}
 
+  /**
+   * Méthode qui permet
+   * de faire ce que je
+   */
   async create(createRecipeDto: CreateRecipeDto) {
     const recipes = this.recipeRepository.create(createRecipeDto);
     const result = await this.recipeRepository.save(recipes);
@@ -45,8 +48,15 @@ export class RecipesService {
   }
 
   async update(id_recipe: number, updateRecipeDto: UpdateRecipeDto) {
-    await this.recipeRepository.update(id_recipe, updateRecipeDto);
-    return this.findOne(id_recipe);
+    // 1 - récupérer la recette dans la BDD en fonction de son id
+    const recipToUpdat = await this.findOne(id_recipe);
+
+    // 2 - Fusionner l'objet recupérer dans la BDD avec les changements du DTO (spread operator)
+    const fusionRecipes: Recipe = { ...recipToUpdat, ...updateRecipeDto };
+    console.log(fusionRecipes);
+
+    // 3 - Sauvegarder les modification en BDD (save)
+    return await this.recipeRepository.save(fusionRecipes);
   }
 
   async remove(id_recipe: number) {

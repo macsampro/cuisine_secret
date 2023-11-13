@@ -54,7 +54,7 @@ export class PhotosController {
     // Définissez les en-têtes de la réponse pour indiquer le type de contenu et un nom de fichier
     res.set({
       'Content-Type': photo.mimetype,
-      'Content-Disposition': `attachment; filename="${photo.name}"`, // Utilisez 'inline' pour afficher dans le navigateur
+      'Content-Disposition': `attachment; filename="${photo.name}"`,
     });
     // Retournez un StreamableFile qui permettra au client de télécharger ou d'afficher l'image
     return new StreamableFile(file);
