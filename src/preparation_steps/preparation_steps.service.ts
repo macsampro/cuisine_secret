@@ -65,6 +65,7 @@ export class PreparationStepsService {
       );
     }
     await this.preparationStepRepository.remove(preparationStepToRemove);
+
     return {
       message: `the preparation step ${preparationStepToRemove.id_preparation_step} is delet !`,
     };

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateIngredientDto } from './dto/create-ingredient.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Ingredient } from './entities/ingredient.entity';
@@ -29,7 +29,14 @@ export class IngredientsService {
   //   return `This action updates a #${id} ingredient`;
   // }
 
-  remove(id: number) {
-    return `This action removes a #${id} ingredient`;
+  async remove(id: number) {
+    const ingredientFind = await this.ingredientRepository.find({
+      where: { id_ingredient: id },
+    });
+
+    if (!ingredientFind) {
+      throw new NotFoundException(`l'id numéro ${id} n'existe pas !`);
+    }
+    return await this.ingredientRepository.remove(ingredientFind);
   }
 }

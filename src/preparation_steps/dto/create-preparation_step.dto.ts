@@ -1,5 +1,5 @@
 export class CreatePreparationStepDto {
   description: string;
-  order: number;
+  order_step: number;
   id_recipe: number;
 }

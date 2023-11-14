@@ -1,4 +1,5 @@
 import { Favoris } from 'src/favoris/entities/favoris.entity';
+import { PreparationStep } from 'src/preparation_steps/entities/preparation_step.entity';
 import { QuantityIngredient } from 'src/quantity_ingredients/entities/quantity_ingredient.entity';
 
 export class CreateRecipeDto {
@@ -10,4 +11,5 @@ export class CreateRecipeDto {
   id_user: number;
   quantityIngredients: QuantityIngredient[];
   favoris: Favoris[];
+  PreparationSteps: PreparationStep[];
 }
