@@ -16,8 +16,6 @@ import { PreparationStep } from './preparation_steps/entities/preparation_step.e
 import { Photo } from './photos/entities/photo.entity';
 import { Ingredient } from './ingredients/entities/ingredient.entity';
 import { Favoris } from './favoris/entities/favoris.entity';
-import { QuantityIngredientsModule } from './quantity_ingredients/quantity_ingredients.module';
-import { QuantityIngredient } from './quantity_ingredients/entities/quantity_ingredient.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 
@@ -34,15 +32,7 @@ import { join } from 'path';
       username: process.env.POSTGRES_USER,
       password: process.env.POSTGRES_PASSWORD,
       database: process.env.POSTGRES_DATABASE,
-      entities: [
-        User,
-        Recipe,
-        QuantityIngredient,
-        PreparationStep,
-        Photo,
-        Ingredient,
-        Favoris,
-      ],
+      entities: [User, Recipe, PreparationStep, Photo, Ingredient, Favoris],
       synchronize: false,
       logging: false,
     }),
@@ -52,7 +42,6 @@ import { join } from 'path';
     RecipesModule,
     PhotosModule,
     FavorisModule,
-    QuantityIngredientsModule,
     IngredientsModule,
     PreparationStepsModule,
   ],

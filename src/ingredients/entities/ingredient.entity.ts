@@ -12,14 +12,6 @@ export class Ingredient {
   @Column()
   ingredient_type: string;
 
-  // @ManyToMany(
-  //   () => QuantityIngredient,
-  //   (quantityIngredient) => quantityIngredient.ingredients,
-  //   { eager: true },
-  // )
-  // @JoinColumn({ name: 'id_ingredient' })
-  // quantityIngredient: QuantityIngredient[];
-
   @ManyToMany(() => Recipe, (recipe) => recipe.ingredient)
   recipe?: Recipe[];
 }

@@ -4,7 +4,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/users/entities/user.entity';
 import { Repository } from 'typeorm';
 import { Recipe } from './entities/recipe.entity';
-import { QuantityIngredient } from 'src/quantity_ingredients/entities/quantity_ingredient.entity';
 import { PreparationStep } from 'src/preparation_steps/entities/preparation_step.entity';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 
@@ -15,8 +14,6 @@ export class RecipesService {
     private userRepository: Repository<User>,
     @InjectRepository(Recipe)
     private recipeRepository: Repository<Recipe>,
-    @InjectRepository(QuantityIngredient)
-    private quantityIgredientRepository: Repository<QuantityIngredient>,
     @InjectRepository(PreparationStep)
     private preparationStep: Repository<PreparationStep>,
   ) {}

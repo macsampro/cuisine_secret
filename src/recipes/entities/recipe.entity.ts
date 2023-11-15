@@ -69,7 +69,7 @@ export class Recipe {
   @OneToMany(
     () => PreparationStep,
     (preparation_step) => preparation_step.recipe,
-    { eager: true },
+    { eager: true, cascade: true },
   )
   preparation_step?: PreparationStep;
 }

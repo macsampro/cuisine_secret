@@ -4,7 +4,6 @@ import { UpdatePreparationStepDto } from './dto/update-preparation_step.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Recipe } from 'src/recipes/entities/recipe.entity';
 import { User } from 'src/users/entities/user.entity';
-import { QuantityIngredient } from 'src/quantity_ingredients/entities/quantity_ingredient.entity';
 import { Repository } from 'typeorm';
 import { PreparationStep } from './entities/preparation_step.entity';
 
@@ -17,8 +16,6 @@ export class PreparationStepsService {
     private userRepository: Repository<User>,
     @InjectRepository(Recipe)
     private recipeRepository: Repository<Recipe>,
-    @InjectRepository(QuantityIngredient)
-    private quantityIgredientRepository: Repository<QuantityIngredient>,
   ) {}
 
   async create(createPreparationStepDto: CreatePreparationStepDto) {
