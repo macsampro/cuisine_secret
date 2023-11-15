@@ -96,11 +96,9 @@ CREATE TABLE ingredients (
 
 -- Création de la table pour les quantités des ingrédients associées à une recette
 CREATE TABLE quantity_ingredients(
-    id_quantity_ingredients SERIAL PRIMARY KEY,
-    quantity INT NOT NULL,
-    unit unit_enum NOT NULL,
-    id_recipe INT REFERENCES recipes(id_recipe),
-    id_ingredient INT REFERENCES ingredients(id_ingredient)
+        id_recipe INT REFERENCES recipes(id_recipe),
+    id_ingredient INT REFERENCES ingredients(id_ingredient),
+   PRIMARY key (id_recipe, id_ingredient)
 );
 
 -- Création de la table pour les étapes de préparation des recettes
@@ -191,6 +189,12 @@ INSERT INTO ingredients(ingredient_name, ingredient_type) VALUES
 ('Noix de cajou', 'Noix et graines'),
 ('Sésame', 'Noix et graines');
 
+insert into users (username, password_hash,email) values
+('aaa', '$2b$10$sNxOsx9D/FloPqmP2.kQyu.aZRqHRxWoSWxbHN4E2nSbGkR3fvkn6','aaa01@aaa.aa'),
+('bbb', '$2b$10$Pjh488Pg00RhQTMuMxJIK.FRT/.r5B7bjhmPAuC7b5iHLiyeKDF5e','bbb01@aaa.aa'),
+('ccc', 'ccc','ccc01@aaa.aa');
+
+
 
 INSERT INTO recipes(title, recipe_type, description, time_preparation, difficulty, creation_date, id_user) VALUES
 -- Italienne
@@ -238,3 +242,6 @@ INSERT INTO recipes(title, recipe_type, description, time_preparation, difficult
 -- Boisson
 ('Mojito', 'Boisson', 'Cocktail à base de rhum, menthe et citron vert.', '00:10:00', 'facile', '2023-10-12', 1),
 ('Smoothie à la banane', 'Boisson', 'Smoothie à base de banane et de lait.', '00:05:00', 'facile', '2023-10-12', 1);
+
+
+
