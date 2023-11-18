@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   ConflictException,
   Injectable,
   InternalServerErrorException,
@@ -22,6 +23,11 @@ export class AuthService {
 
   async register(createAuthDto: CreateAuthDto) {
     const { username, password_hash, email } = createAuthDto;
+
+    // Valider le mot de passe
+    if (!password_hash) {
+      throw new BadRequestException('Le mot de passe est requis');
+    }
 
     // hashage du mot de passe
     const salt = await bcrypt.genSalt(10);
