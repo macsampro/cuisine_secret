@@ -24,7 +24,7 @@ export class AuthService {
     const { username, password_hash, email } = createAuthDto;
 
     // hashage du mot de passe
-    const salt = await bcrypt.genSalt();
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password_hash, salt);
 
     // création d'une entité user

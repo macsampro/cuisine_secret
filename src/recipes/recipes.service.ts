@@ -57,13 +57,19 @@ export class RecipesService {
   }
 
   async remove(id_recipe: number) {
+    // Trouver la recette à supprimer
     const recipeToRemove = await this.findOne(id_recipe);
+
     if (!recipeToRemove) {
       throw new Error(`The recipe with id number: ${id_recipe} is not found !`);
     }
+    // Supprimer toutes les étapes de préparation associées à la recette
+    await this.preparationStep.delete({ id_recipe: id_recipe });
+
+    // Supprimer la recette
     await this.recipeRepository.remove(recipeToRemove);
     return {
-      message: `the recipe ${recipeToRemove.id_recipe} is delet !`,
+      message: `the recipe ${recipeToRemove.id_recipe} is deleted !`,
     };
   }
 }
