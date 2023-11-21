@@ -6,6 +6,7 @@ import { Repository } from 'typeorm';
 import { Recipe } from './entities/recipe.entity';
 import { PreparationStep } from 'src/preparation_steps/entities/preparation_step.entity';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
+import { RecipeType } from 'src/enums/recipe.enums';
 
 @Injectable()
 export class RecipesService {
@@ -71,5 +72,8 @@ export class RecipesService {
     return {
       message: `the recipe ${recipeToRemove.id_recipe} is deleted !`,
     };
+  }
+  async getAllRecipeTypes(): Promise<RecipeType[]> {
+    return Object.values(RecipeType);
   }
 }

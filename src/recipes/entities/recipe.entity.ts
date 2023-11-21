@@ -23,7 +23,7 @@ export class Recipe {
   title: string;
 
   @Column({ type: 'enum', enum: RecipeType })
-  recipe_type: string;
+  recipe_type: RecipeType;
 
   @Column({ type: 'varchar', length: 255 })
   description: string;

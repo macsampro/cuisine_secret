@@ -24,7 +24,7 @@ export class AuthService {
   async register(createAuthDto: CreateAuthDto) {
     const { username, password_hash, email } = createAuthDto;
 
-    // Valider le mot de passe
+    // Valider que le mot de passe est fourni
     if (!password_hash) {
       throw new BadRequestException('Le mot de passe est requis');
     }
@@ -33,7 +33,7 @@ export class AuthService {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password_hash, salt);
 
-    // création d'une entité user
+    // Création de l'utilisateur
     const user = this.userRepository.create({
       username,
       password_hash: hashedPassword,
@@ -41,12 +41,12 @@ export class AuthService {
     });
 
     try {
-      // enregistrement de l'entité user
+      // Enregistrement de l'utilisateur
       const createdUser = await this.userRepository.save(user);
-      delete createdUser.password_hash;
+      delete createdUser.password_hash; // Retirer le hash du mot de passe avant de retourner l'utilisateur
       return createdUser;
     } catch (error) {
-      // gestion des erreurs
+      // Gestion des erreurs de base de données
       if (error.code === '23505') {
         throw new ConflictException('username already exists');
       } else {
@@ -57,18 +57,16 @@ export class AuthService {
 
   async login(loginDto: LoginDto) {
     console.log(loginDto);
-    // const { username, password_hash } = loginDto;
+    // Recherche de l'utilisateur par le nom d'utilisateur
     const user = await this.userRepository.findOne({
       where: { username: loginDto.username },
     });
-    console.log(user);
-    console.log(loginDto.password_hash);
-    console.log(user.password_hash);
     const resultcompart = await bcrypt.compare(
       loginDto.password_hash,
       user.password_hash,
     );
 
+    // Si l'utilisateur existe et que le mot de passe correspond
     if (user && resultcompart) {
       console.log('11');
 
@@ -77,9 +75,10 @@ export class AuthService {
         id_user: user.id_user,
         // sub: user.username,
       };
-      const accessToken = this.jwtService.sign(payload);
+      const accessToken = this.jwtService.sign(payload); // Génération du token JWT
       return { accessToken, user_id: user.id_user, username: user.username };
     } else {
+      // Lève une exception si l'authentification échoue
       throw new UnauthorizedException('identification incorecte');
     }
   }
