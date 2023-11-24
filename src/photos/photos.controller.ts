@@ -8,6 +8,8 @@ import {
   StreamableFile,
   Res,
   NotFoundException,
+  Req,
+  Body,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { PhotosService } from './photos.service';
@@ -21,8 +23,15 @@ export class PhotosController {
 
   @Post()
   @UseInterceptors(FileInterceptor('monFichier'))
-  uploadImage(@UploadedFile() file: Express.Multer.File) {
-    return this.photosService.create(file);
+  uploadImage(
+    @UploadedFile() file: Express.Multer.File,
+    @Req() req,
+    @Body() idRecipe: { id: number },
+  ) {
+    console.log('ce que je cherche ', idRecipe.id);
+    console.log('OOOOOOOOOOOO', file.size);
+
+    return this.photosService.create(file, idRecipe.id);
   }
 
   @Get()

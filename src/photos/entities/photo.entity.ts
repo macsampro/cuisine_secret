@@ -18,8 +18,8 @@ export class Photo {
   @Column()
   mimetype: string;
 
-  @Column()
-  id_recipe: number;
+  // @Column()
+  // id_recipe: number;
 
   @ManyToOne(() => Recipe, (recipe) => recipe.id_photo)
   @JoinColumn({ name: 'id_recipe', referencedColumnName: 'id_recipe' })

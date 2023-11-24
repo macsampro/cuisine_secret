@@ -16,7 +16,7 @@ export class RecipesService {
     @InjectRepository(Recipe)
     private recipeRepository: Repository<Recipe>,
     @InjectRepository(PreparationStep)
-    private preparationStep: Repository<PreparationStep>,
+    private preparationstep: Repository<PreparationStep>,
   ) {}
 
   /**
@@ -65,7 +65,7 @@ export class RecipesService {
       throw new Error(`The recipe with id number: ${id_recipe} is not found !`);
     }
     // Supprimer toutes les étapes de préparation associées à la recette
-    await this.preparationStep.delete({ id_recipe: id_recipe });
+    await this.preparationstep.delete({ id_recipe: id_recipe });
 
     // Supprimer la recette
     await this.recipeRepository.remove(recipeToRemove);

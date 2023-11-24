@@ -4,20 +4,23 @@ import { Photo } from './entities/photo.entity';
 import { Repository } from 'typeorm';
 import { join } from 'path';
 import { createReadStream } from 'fs';
+import { Recipe } from 'src/recipes/entities/recipe.entity';
 
 @Injectable()
 export class PhotosService {
   constructor(
     @InjectRepository(Photo) private photoRepository: Repository<Photo>,
+    @InjectRepository(Recipe) private recipeRepository: Repository<Recipe>,
   ) {}
 
-  create(img: Express.Multer.File) {
-    console.log('notre img' + img.originalname);
+  create(img: Express.Multer.File, id: number) {
+    console.log('notre img' + img);
     return this.photoRepository.save({
       name: img.filename,
       mimetype: img.mimetype,
       size: img.size,
       description: img.originalname,
+      recipe: { id_recipe: id },
     });
   }
 
@@ -55,7 +58,7 @@ export class PhotosService {
   }
   async findPhotoByRecipeId(recipeId: number): Promise<Photo> {
     const photo = await this.photoRepository.findOne({
-      where: { id_recipe: recipeId },
+      where: { recipe: { id_recipe: recipeId } },
     });
     return photo;
   }

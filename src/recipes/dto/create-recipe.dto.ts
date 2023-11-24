@@ -11,5 +11,5 @@ export class CreateRecipeDto {
   recipe_type: RecipeType;
   id_user: number;
   favoris: Favoris[];
-  PreparationSteps: PreparationStep[];
+  preparationstep: PreparationStep[];
 }
