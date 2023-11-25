@@ -13,14 +13,14 @@ export class PhotosService {
     @InjectRepository(Recipe) private recipeRepository: Repository<Recipe>,
   ) {}
 
-  create(img: Express.Multer.File, id: number) {
+  create(img: Express.Multer.File, recipeId: number) {
     console.log('notre img' + img);
     return this.photoRepository.save({
       name: img.filename,
       mimetype: img.mimetype,
       size: img.size,
       description: img.originalname,
-      recipe: { id_recipe: id },
+      recipe: { id_recipe: recipeId },
     });
   }
 

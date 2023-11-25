@@ -23,15 +23,24 @@ export class PhotosController {
 
   @Post()
   @UseInterceptors(FileInterceptor('monFichier'))
-  uploadImage(
+  async uploadImage(
     @UploadedFile() file: Express.Multer.File,
     @Req() req,
-    @Body() idRecipe: { id: number },
+    @Body('recipeId') recipeId: number,
   ) {
-    console.log('ce que je cherche ', idRecipe.id);
-    console.log('OOOOOOOOOOOO', file.size);
+    console.log('id de la recette', recipeId);
 
-    return this.photosService.create(file, idRecipe.id);
+    // console.log(
+    //   'ce que je cherche ',
+    //   await this.photosService.create(file, recipeId),
+    // );
+
+    if (!recipeId) {
+      throw new NotFoundException('ID de recette non fourni');
+    }
+    console.log('ID de recette reçu:', recipeId);
+
+    return await this.photosService.create(file, recipeId);
   }
 
   @Get()
