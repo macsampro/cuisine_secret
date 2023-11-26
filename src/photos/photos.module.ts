@@ -18,5 +18,6 @@ import { Recipe } from 'src/recipes/entities/recipe.entity';
 
   controllers: [PhotosController], // Contrôleur qui va gérer les routes pour les photos.
   providers: [PhotosService], // Service qui va gérer la logique métier des photos.
+  exports: [PhotosService], // Exporter photoService
 })
 export class PhotosModule {}

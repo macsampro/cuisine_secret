@@ -21,7 +21,7 @@ export class Photo {
   // @Column()
   // id_recipe: number;
 
-  @ManyToOne(() => Recipe, (recipe) => recipe.id_photo)
+  @ManyToOne(() => Recipe, (recipe) => recipe.id_photo, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'id_recipe', referencedColumnName: 'id_recipe' })
   recipe: Recipe;
 }

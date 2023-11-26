@@ -7,6 +7,7 @@ import { Recipe } from './entities/recipe.entity';
 import { PreparationStep } from 'src/preparation_steps/entities/preparation_step.entity';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
 import { RecipeType } from 'src/enums/recipe.enums';
+import { PhotosService } from 'src/photos/photos.service';
 
 @Injectable()
 export class RecipesService {
@@ -15,6 +16,7 @@ export class RecipesService {
     private userRepository: Repository<User>,
     @InjectRepository(Recipe)
     private recipeRepository: Repository<Recipe>,
+    private photosService: PhotosService,
     @InjectRepository(PreparationStep)
     private preparationstep: Repository<PreparationStep>,
   ) {}
@@ -64,6 +66,9 @@ export class RecipesService {
     if (!recipeToRemove) {
       throw new Error(`The recipe with id number: ${id_recipe} is not found !`);
     }
+    // Supprimez d'abord les photos associées
+    await this.photosService.deletePhotosByRecipeId(id_recipe);
+
     // Supprimer toutes les étapes de préparation associées à la recette
     await this.preparationstep.delete({ id_recipe: id_recipe });
 
@@ -73,6 +78,7 @@ export class RecipesService {
       message: `the recipe ${recipeToRemove.id_recipe} is deleted !`,
     };
   }
+
   async getAllRecipeTypes(): Promise<RecipeType[]> {
     return Object.values(RecipeType);
   }

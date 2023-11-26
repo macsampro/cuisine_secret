@@ -62,4 +62,12 @@ export class PhotosService {
     });
     return photo;
   }
+
+  // async deletePhotosByRecipeId(recipeId: number): Promise<void> {
+  //   await this.photoRepository.delete({ recipe: { id_recipe: recipeId } });
+  // }
+
+  async deletePhotosByRecipeId(recipeId: number): Promise<void> {
+    await this.photoRepository.delete({ recipe: { id_recipe: recipeId } });
+  }
 }
