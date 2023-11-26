@@ -47,6 +47,10 @@ export class RecipesService {
     return found;
   }
 
+  async findAllByUserId(id_user: number): Promise<Recipe[]> {
+    return await this.recipeRepository.find({ where: { user: { id_user } } });
+  }
+
   async update(id_recipe: number, updateRecipeDto: UpdateRecipeDto) {
     // 1 - récupérer la recette dans la BDD en fonction de son id
     const recipToUpdat = await this.findOne(id_recipe);

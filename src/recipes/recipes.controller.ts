@@ -19,6 +19,12 @@ export class RecipesController {
   getAllRecipeTypes() {
     return this.recipesService.getAllRecipeTypes();
   }
+
+  @Get('/user/:userId')
+  findAllByUserId(@Param('userId') userId: string) {
+    return this.recipesService.findAllByUserId(+userId);
+  }
+
   @Post()
   create(@Body() createRecipeDto: CreateRecipeDto) {
     return this.recipesService.create(createRecipeDto);
