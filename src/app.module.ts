@@ -16,14 +16,9 @@ import { PreparationStep } from './preparation_steps/entities/preparation_step.e
 import { Photo } from './photos/entities/photo.entity';
 import { Ingredient } from './ingredients/entities/ingredient.entity';
 import { Favoris } from './favoris/entities/favoris.entity';
-// import { ServeStaticModule } from '@nestjs/serve-static';
-// import { join } from 'path';
 
 @Module({
   imports: [
-    // ServeStaticModule.forRoot({
-    //   rootPath: join(__dirname, '..', 'uploads'),
-    // }),
     ConfigModule.forRoot({ envFilePath: [`.env`] }),
     TypeOrmModule.forRoot({
       type: 'postgres',

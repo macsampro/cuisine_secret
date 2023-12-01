@@ -10,12 +10,14 @@ import {
   NotFoundException,
   Req,
   Body,
+  UseGuards,
 } from '@nestjs/common';
 import { Response } from 'express';
 import { PhotosService } from './photos.service';
 import { join } from 'path'; // Import pour accéder aux chemins de fichiers
 import { createReadStream } from 'fs'; // Import pour créer un stream de fichier
 import { FileInterceptor } from '@nestjs/platform-express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('photos')
 export class PhotosController {
@@ -30,11 +32,6 @@ export class PhotosController {
   ) {
     console.log('id de la recette', recipeId);
 
-    // console.log(
-    //   'ce que je cherche ',
-    //   await this.photosService.create(file, recipeId),
-    // );
-
     if (!recipeId) {
       throw new NotFoundException('ID de recette non fourni');
     }
@@ -44,7 +41,7 @@ export class PhotosController {
   }
 
   @Get()
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   async getPhotos(@Res({ passthrough: true }) res): Promise<StreamableFile> {
     return this.photosService.getPhotos(res);
   }

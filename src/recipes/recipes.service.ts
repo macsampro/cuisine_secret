@@ -21,10 +21,6 @@ export class RecipesService {
     private preparationstep: Repository<PreparationStep>,
   ) {}
 
-  /**
-   * Méthode qui permet
-   * de faire ce que je
-   */
   async create(createRecipeDto: CreateRecipeDto) {
     const recipes = this.recipeRepository.create(createRecipeDto);
     const result = await this.recipeRepository.save(recipes);

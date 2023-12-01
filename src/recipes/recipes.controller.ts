@@ -6,12 +6,15 @@ import {
   Patch,
   Param,
   Delete,
+  UseGuards,
 } from '@nestjs/common';
 import { RecipesService } from './recipes.service';
 import { CreateRecipeDto } from './dto/create-recipe.dto';
 import { UpdateRecipeDto } from './dto/update-recipe.dto';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('recipes')
+@UseGuards(AuthGuard('jwt'))
 export class RecipesController {
   constructor(private readonly recipesService: RecipesService) {}
 

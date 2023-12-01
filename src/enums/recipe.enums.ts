@@ -1,5 +1,3 @@
-// recipe.enums.ts
-
 export enum Difficulty {
   FACILE = 'facile',
   INTERMEDIAIRE = 'intermédiaire',
